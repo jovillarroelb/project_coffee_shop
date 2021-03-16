@@ -16,7 +16,7 @@ CORS(app)
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 '''
-# db_drop_and_create_all()
+db_drop_and_create_all()
 
 ## ROUTES
 '''
@@ -28,6 +28,37 @@ CORS(app)
         or appropriate status code indicating reason for failure
 '''
 
+# 1.- GET ALL DRINK CATEGORIES
+@app.route('/categories')
+def get_categories():
+    '''
+    Description: Query all the categories existing in the DB and add it to
+    a dictionary that will be presented in JSON format if success.
+    Otherwise, throw an 404 error.
+    '''
+    # Collect (query) all drinks.
+    categories = Drink.query.all()
+    category_dictionary = {}
+    
+    # Check what info I have.
+    print(category_dictionary)
+
+    # Make Key:Value using 'Id': 'Type'
+    # (1:Science, 2:Art, 3:Geography, 4:History, 5:Entertainment, 6:Sports)
+    for c in categories:
+        category_dictionary[c.id] = c.type
+
+    # When dictionary is empty >>>> Throws 404 error #
+    # if 'category_dictionary' in not empty
+    if (len(category_dictionary) != 0):
+        # Show the data from the dictionary in JSON format.
+        return jsonify({
+            'success': True,
+            'categories': category_dictionary,
+            }), 200
+    # Dictionary is empty
+    else:
+        abort(404)
 
 '''
 @TODO implement endpoint
@@ -74,37 +105,37 @@ CORS(app)
         or appropriate status code indicating reason for failure
 '''
 
+'''
+B.- ERROR HANDLERS:
 
-## Error Handling
 '''
-Example error handling for unprocessable entity
-'''
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        "success": False,
+        "error": 400,
+        "message": "bad request"
+    }), 400
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({
+        "success": False,
+        "error": 404,
+        "message": "resource not found"
+    }), 404
+
 @app.errorhandler(422)
 def unprocessable(error):
     return jsonify({
-                    "success": False, 
-                    "error": 422,
-                    "message": "unprocessable"
-                    }), 422
-
-'''
-@TODO implement error handlers using the @app.errorhandler(error) decorator
-    each error handler should return (with approprate messages):
-             jsonify({
-                    "success": False, 
-                    "error": 404,
-                    "message": "resource not found"
-                    }), 404
-
-'''
-
-'''
-@TODO implement error handler for 404
-    error handler should conform to general task above 
-'''
-
+        "success": False,
+        "error": 422,
+        "message": "unprocessable"
+    }), 422
 
 '''
 @TODO implement error handler for AuthError
-    error handler should conform to general task above 
+    error handler should conform to general task above
 '''
