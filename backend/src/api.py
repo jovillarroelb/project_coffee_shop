@@ -16,7 +16,7 @@ CORS(app)
 !! NOTE THIS WILL DROP ALL RECORDS AND START YOUR DB FROM SCRATCH
 !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
 """
-db_drop_and_create_all()
+# db_drop_and_create_all()
 
 ## ROUTES
 """
@@ -98,7 +98,7 @@ def post_drink():
     try:
         new_drink = Drink(
             title=rqst["title"],
-            recipe=rqst["recipe"],
+            recipe=json.dumps(rqst["recipe"]),
         )
         new_drink.insert()
 
@@ -200,17 +200,44 @@ B.- ERROR HANDLERS:
 
 @app.errorhandler(400)
 def bad_request(error):
-    return jsonify({"success": False, "error": 400, "message": "bad request"}), 400
+    return (
+        jsonify(
+            {
+                "success": False,
+                "error": 400,
+                "message": "bad request",
+            }
+        ),
+        400,
+    )
 
 
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({"success": False, "error": 404, "message": "resource not found"}), 404
+    return (
+        jsonify(
+            {
+                "success": False,
+                "error": 404,
+                "message": "resource not found",
+            }
+        ),
+        404,
+    )
 
 
 @app.errorhandler(422)
 def unprocessable(error):
-    return jsonify({"success": False, "error": 422, "message": "unprocessable"}), 422
+    return (
+        jsonify(
+            {
+                "success": False,
+                "error": 422,
+                "message": "unprocessable",
+            }
+        ),
+        422,
+    )
 
 
 """
