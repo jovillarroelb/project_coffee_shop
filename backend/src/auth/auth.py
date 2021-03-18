@@ -3,7 +3,6 @@ from flask import request
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
-from os import environ
 
 # # A.- Starter Code
 # AUTH0_DOMAIN = "udacity-fsnd.auth0.com"
@@ -11,9 +10,9 @@ from os import environ
 # API_AUDIENCE = "dev"
 
 # B.- Personal Project Specific:
-AUTH0_DOMAIN = environ.get("AUTH0_DOMAIN", "jovillarroelb.us.auth0.com")
+AUTH0_DOMAIN = "jovillarroelb.us.auth0.com"
 ALGORITHMS = ["RS256"]
-API_AUDIENCE = environ.get("API_AUDIENCE", "coffeeshop")
+API_AUDIENCE = "coffeeshop"
 
 ## AuthError Exception
 """
