@@ -11,7 +11,7 @@ from os import environ
 # API_AUDIENCE = "dev"
 
 # B.- Personal Project Specific:
-AUTH0_DOMAIN = environ.get("AUTH0_DOMAIN", "jovillarroelb.auth0.com")
+AUTH0_DOMAIN = environ.get("AUTH0_DOMAIN", "jovillarroelb.us.auth0.com")
 ALGORITHMS = ["RS256"]
 API_AUDIENCE = environ.get("API_AUDIENCE", "coffeeshop")
 
