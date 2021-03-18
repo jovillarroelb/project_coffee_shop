@@ -57,7 +57,8 @@ def get_token_auth_header():
         )
 
     # Split the header into its sub-parts:
-    parts = auth_hdr.split(".")
+    # Using ".split()" separates the "Bearer" string from the actual token.
+    parts = auth_hdr.split()
 
     # The header has the correct number of sub-elements (ie. for BEARER tokens there are 2 parts)
     if len(parts) == 2:
@@ -181,7 +182,8 @@ def verify_decode_jwt(token):
                 rsa_key,
                 algorithms=ALGORITHMS,
                 audience=API_AUDIENCE,
-                issuer="https://" + AUTH0_DOMAIN + "/",
+                # issuer="https://" + AUTH0_DOMAIN + "/",
+                issuer=f"https://{AUTH0_DOMAIN}/",
             )
             return payload
 

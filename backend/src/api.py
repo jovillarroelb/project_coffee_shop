@@ -98,7 +98,7 @@ def post_drink():
     try:
         new_drink = Drink(
             title=data["title"],
-            recipe=json.dumps(data["recipe"]),
+            recipe=data["recipe"],
         )
         new_drink.insert()
 
@@ -185,7 +185,16 @@ def delete_drink(drink_id):
 
         if drink:
             drink.delete()
-            return jsonify({"success": True, "delete": drink_id, "message": "Drink deleted successfully!"}), 200
+            return (
+                jsonify(
+                    {
+                        "success": True,
+                        "delete": drink_id,
+                        "message": "Drink deleted successfully!",
+                    }
+                ),
+                200,
+            )
         else:
             abort(404)
     except BaseException:
