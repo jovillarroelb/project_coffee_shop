@@ -93,12 +93,12 @@ def post_drink():
     Description: Create a new drink registry.
     """
 
-    rqst = request.get_json()
+    data = request.get_json()
 
     try:
         new_drink = Drink(
-            title=rqst["title"],
-            recipe=json.dumps(rqst["recipe"]),
+            title=data["title"],
+            recipe=json.dumps(data["recipe"]),
         )
         new_drink.insert()
 
@@ -137,12 +137,12 @@ def patch_drink(drink_id):
     """
     Description: Create a new drink registry.
     """
-    rqst = request.get_json()
+    data = request.get_json()
     drink = Drink.query.filter_by(id=drink_id).all()
 
     try:
-        drink.title = rqst["title"]
-        drink.recipe = rqst["recipe"]
+        drink.title = data["title"]
+        drink.recipe = data["recipe"]
         drink.update()
 
         # Return success in JSON format
