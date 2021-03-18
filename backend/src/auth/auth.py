@@ -1,4 +1,3 @@
-# from backend.src.api import auth_error
 import json
 from flask import request
 from functools import wraps
